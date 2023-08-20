@@ -13,6 +13,8 @@ document.addEventListener('DOMContentLoaded', function() {
 	imageViewer = document.createElement("img");
 	imageViewer.src = url + currentFilePath;
 	imageWrapper.appendChild(imageViewer);
+	hideLoading();
+	
 });
 
 document.addEventListener("keydown", function(event) {
@@ -30,6 +32,7 @@ document.addEventListener("keydown", function(event) {
 });
 
 function getNextImage(i){
+	showLoading();
 	var folders = currentFilePath.split('/');
 	folders.pop();
 	currentFolder = folders.join('/');
@@ -37,14 +40,12 @@ function getNextImage(i){
 	const current_index = current_tree.findIndex(obj => obj.path === currentFilePath);
 	if(current_index != -1){
 		const newIndex = current_index + i;
-		if(newIndex < 0 || newIndex >= current_tree.length){
-			
-		}else{
+		if(newIndex >= 0 && newIndex < current_tree.length){
 			updateImageViewer(current_tree[newIndex].path);
 		}
 	}
+	hideLoading();
 }
-
 
 function updateImageViewer(path){
 	imageViewer.src = url + path;
@@ -63,4 +64,14 @@ function getImageArray(path){
 		current_tree = [];
 		console.error(error);
 	});
+}
+
+function showLoading(){
+	const loader = document.getElementById("loader");
+	loader.style.display = "block";
+}
+
+function hideLoading(){
+	const loader = document.getElementById("loader");
+	loader.style.display = "none";
 }

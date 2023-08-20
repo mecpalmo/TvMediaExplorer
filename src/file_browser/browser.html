@@ -6,14 +6,12 @@
     <title>HTTP File Explorer</title>
     <link rel="stylesheet" type="text/css" href="../../style.css"/>
     <link rel="stylesheet" type="text/css" href="browser.css"/>
-    <link rel="stylesheet" type="text/css" href="loading_icon.css"/>
+    <link rel="stylesheet" type="text/css" href="../loader/loader.css"/>
     <script src="browser.js"></script>
 </head>
 <body>
-	
-	<svg id="loading-animation" class="spinner" viewBox="0 0 50 50">
-  		<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
-	</svg>
+
+	<div id="loader" class="loader"></div>
 
 	<div id="sidebar">
 		<div class="siderow" id="home" tabindex="-1">
@@ -58,126 +56,7 @@
 	
 		    <div class="tile" tabindex="-1">
 		      <img class="thumbnail" src="../../icons/back.png"/>
-		    </div>
-		    
-		    <div class="tile" tabindex="-1">
-		      <img class="thumbnail" src="../../icons/folder.png"/>
-		      <div class="title">test_folder</div>
-		    </div>
-		    
-		    <div class="tile" tabindex="-1">
-		      <img class="thumbnail" src="../../icons/folder.png"/>
-		      <div class="title">test_folder</div>
-		    </div>
-		    
-		    <div class="tile" tabindex="-1">
-		      <img class="thumbnail" src="../../icons/image.png"/>
-		      <div class="title">test_image.png</div>
-		    </div>
-		    
-		    <div class="tile" tabindex="-1">
-		      <img class="thumbnail" src="../../icons/video.png"/>
-		      <div class="title">test_video.mp4</div>
-		    </div>
-		    
-		    <div class="tile" tabindex="-1">
-		      <img class="thumbnail" src="../../icons/file.png"/>
-		      <div class="title">test_file.txt</div>
-		    </div>
-		    
-		    <div class="tile" tabindex="-1">
-		      <img class="thumbnail" src="../../icons/image.png"/>
-		      <div class="title">test_image.jpg</div>
-		    </div>
-		    
-			<div class="tile" tabindex="-1">
-		      <img class="thumbnail" src="../../icons/video.png"/>
-		      <div class="title">test_video.mp4</div>
-		    </div> 
-		    
-		    <div class="tile" tabindex="-1">
-		      <img class="thumbnail" src="../../icons/file.png"/>
-		      <div class="title">test_file.txt</div>
-		    </div>
-			
-			<div class="tile" tabindex="-1">
-		      <img class="thumbnail" src="../../icons/folder.png"/>
-		      <div class="title">test_folder</div>
-		    </div>
-		    
-		    <div class="tile" tabindex="-1">
-		      <img class="thumbnail" src="../../icons/folder.png"/>
-		      <div class="title">test_folder</div>
-		    </div>
-		    
-		    <div class="tile" tabindex="-1">
-		      <img class="thumbnail" src="../../icons/image.png"/>
-		      <div class="title">test_image.png</div>
-		    </div>
-		    
-		    <div class="tile" tabindex="-1">
-		      <img class="thumbnail" src="../../icons/video.png"/>
-		      <div class="title">test_video.mp4</div>
-		    </div>
-		    
-		    <div class="tile" tabindex="-1">
-		      <img class="thumbnail" src="../../icons/file.png"/>
-		      <div class="title">test_file.txt</div>
-		    </div>
-		    
-		    <div class="tile" tabindex="-1">
-		      <img class="thumbnail" src="../../icons/image.png"/>
-		      <div class="title">test_image.jpg</div>
-		    </div>
-		    
-			<div class="tile" tabindex="-1">
-		      <img class="thumbnail" src="../../icons/video.png"/>
-		      <div class="title">test_video.mp4</div>
-		    </div> 
-		    
-		    <div class="tile" tabindex="-1">
-		      <img class="thumbnail" src="../../icons/file.png"/>
-		      <div class="title">test_file.txt</div>
-		    </div>
-		    
-		    <div class="tile" tabindex="-1">
-		      <img class="thumbnail" src="../../icons/folder.png"/>
-		      <div class="title">test_folder</div>
-		    </div>
-		    
-		    <div class="tile" tabindex="-1">
-		      <img class="thumbnail" src="../../icons/folder.png"/>
-		      <div class="title">test_folder</div>
-		    </div>
-		    
-		    <div class="tile" tabindex="-1">
-		      <img class="thumbnail" src="../../icons/image.png"/>
-		      <div class="title">test_image.png</div>
-		    </div>
-		    
-		    <div class="tile" tabindex="-1">
-		      <img class="thumbnail" src="../../icons/video.png"/>
-		      <div class="title">test_video.mp4</div>
-		    </div>
-		    
-		    <div class="tile" tabindex="-1">
-		      <img class="thumbnail" src="../../icons/file.png"/>
-		      <div class="title">test_file.txt</div>
-		    </div>
-		    
-		    <div class="tile" tabindex="-1">
-		      <img class="thumbnail" src="../../icons/image.png"/>
-		      <div class="title">test_image.jpg</div>
-		    </div>
-		    
-			<div class="tile" tabindex="-1">
-		      <img class="thumbnail" src="../../icons/video.png"/>
-		      <div class="title">test_video.mp4</div>
-		    </div> 
-		    
-		    <div class="tile" tabindex="-1">
-		      <img class="thumbnail" src="../../icons/file.png"/>
-		      <div class="title">test_file.txt</div>
+		      <div class="title">Exit</div>
 		    </div>
 			
 	    </div>

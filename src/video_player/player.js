@@ -13,7 +13,10 @@ window.onload = function () {
 	
 	registerKeyHandler(videoPlayer);
 	initProgressVisuals(videoPlayer);
-	showControls();
+	videoPlayer.addEventListener('play', () => {
+        showControls();
+        hideLoading();
+    });
 	
 }
 
@@ -56,7 +59,7 @@ function setPlayButton(isPlay){
 
 function registerKeyHandler(videoPlayer) {
 	document.addEventListener('keydown', function (event) {
-		var seekJump = 5;
+		var seekJump = 10;
 		showControls();
 		switch (event.keyCode) {
 			case 10009: //key RETURN
@@ -115,4 +118,14 @@ function showControls() {
 function hideControls() {
 	const controls = document.getElementById("controls");
 	controls.style.opacity = 0;
+}
+
+function showLoading(){
+	const loader = document.getElementById("loader");
+	loader.style.display = "block";
+}
+
+function hideLoading(){
+	const loader = document.getElementById("loader");
+	loader.style.display = "none";
 }

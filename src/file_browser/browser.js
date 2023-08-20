@@ -19,6 +19,7 @@ window.onload = function () {
 }
 
 function updateGridView() {
+	showLoading();
 	fetch(url + script + current_path)
 		.then(function(response) {
 			return response.json();
@@ -26,28 +27,25 @@ function updateGridView() {
 		.then(function(data) {
 			current_tree = data;
 			renderGridContainer(data);
+			hideLoading();
 		})
 		.catch(function(error) {
 			current_tree = [];
-			console.error(error);
-			//renderErrorMessage(error);
+			renderErrorMessage(error);
+			setTileFocused(0);
+			hideLoading();
 		});
 	
 }
 
 function renderErrorMessage(error){
-	var gridContainer = document.getElementById('grid-container');
-  	gridContainer.innerHTML = ''; // Clear existing content
-  	var errorElement = document.createElement('div');
-  	errorElement.classList.add('error');
-  	errorElement.textContent = "Błąd połączenia z serwerem<br><br>" + error;
-  	gridContainer.appendChild(errorElement);
-  	setSidebarExtended(false);
+	var path_description = document.getElementById("path");
+	path_description.innerHTML = "Błąd połączenia. " + error;
 }
 
 function updatePathDescription(){
 	var folders = current_path.split('/');
-	var path = "/ " + folders.join(' > ');
+	var path = "/ " + folders.join("  >  ");
 	var path_description = document.getElementById("path");
 	path_description.innerHTML = path;
 }
@@ -229,6 +227,10 @@ function setTileFocused(index){
 		tiles[index].focus();
 		lastTileFocus = index;
 	}
+	if(index >= tiles.length){
+		lastTileFocus = tiles.length - 1;
+		tiles[lastTileFocus].focus();
+	}
 }
 
 
@@ -238,6 +240,16 @@ function setSiderowFocused(index){
 		siderows[index].focus();
 		lastSiderowFocus = index;
 	}
+}
+
+function showLoading(){
+	const loader = document.getElementById("loader");
+	loader.style.display = "block";
+}
+
+function hideLoading(){
+	const loader = document.getElementById("loader");
+	loader.style.display = "none";
 }
 
 document.addEventListener("keydown", function(event) { //button handler
@@ -290,7 +302,6 @@ document.addEventListener("keydown", function(event) { //button handler
 					setSidebarExtended(false);
 					setTileFocused(tileIndex + 1);
 				}
-				
 				break;
 			case 13: //Enter
 				if(sidebarExtended){
