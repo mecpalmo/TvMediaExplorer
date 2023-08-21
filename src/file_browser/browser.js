@@ -28,6 +28,7 @@ function updateGridView() {
 			current_tree = data;
 			renderGridContainer(data);
 			hideLoading();
+			updateThumbnails();
 		})
 		.catch(function(error) {
 			current_tree = [];
@@ -35,7 +36,6 @@ function updateGridView() {
 			setTileFocused(0);
 			hideLoading();
 		});
-	
 }
 
 function renderErrorMessage(error){
@@ -53,6 +53,7 @@ function updatePathDescription(){
 function renderGridContainer(fileTree) {
 
 	updatePathDescription();
+	id_Table = [];
 	
 	var gridContainer = document.getElementById('grid-container');
   	gridContainer.innerHTML = ''; // Clear existing content
@@ -127,6 +128,34 @@ function getFileIconPath(type){
 		default:
 			return icons_path + 'file.png';
 	}
+}
+
+function updateThumbnails(){
+	var tiles = Array.from(document.getElementsByClassName("tile"));
+	for (var i = 1; i < tiles.length; i++) {
+		var file = current_tree[id_Table[i]];
+		if (file.mediaType == 'video' || file.mediaType == 'image') {
+			var thumbnail = tiles[i].querySelector('.thumbnail');
+			setImageSourceIfValid(thumbnail, url + getThumbnailPath(file.path));
+		}
+	}
+}
+
+function setImageSourceIfValid(imgElement, imageUrl) {
+	  var tempImage = new Image();
+	  tempImage.onload = function() {
+	    imgElement.src = imageUrl;
+	  };
+	  tempImage.src = imageUrl;
+}
+
+function getThumbnailPath(filePath) {
+	  filePath = filePath.replace('Cloud', 'Thumbnails');
+	  var indexOfDot = filePath.lastIndexOf('.');
+	  if (indexOfDot !== -1) {
+	    return filePath.substring(0, indexOfDot) + '.jpg';
+	  }
+	  return "";
 }
 
 function enterTile(index) {
