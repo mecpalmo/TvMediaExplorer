@@ -12,7 +12,12 @@ body {
 }
 
 img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: opacity 0.1s ease-in-out;
+}
+
+.hide-image {
+  	opacity: 0;
 }

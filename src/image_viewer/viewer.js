@@ -12,6 +12,10 @@ document.addEventListener('DOMContentLoaded', function() {
 	var imageWrapper = document.getElementById('image_wrapper');
 	imageViewer = document.createElement("img");
 	imageViewer.src = url + currentFilePath;
+	imageViewer.onload = function() {
+		imageViewer.classList.remove("hide-image");
+		hideLoading();
+	};
 	imageWrapper.appendChild(imageViewer);
 	hideLoading();
 	
@@ -26,30 +30,37 @@ document.addEventListener("keydown", function(event) {
 			getNextImage(1);
 			break;
 		case 10009: //Back
+			imageViewer.classList.add("hide-image");
 			window.history.back();
 			break;
 	}
 });
 
 function getNextImage(i){
-	showLoading();
-	var folders = currentFilePath.split('/');
-	folders.pop();
-	currentFolder = folders.join('/');
+	var sessionPath = sessionStorage.getItem('current_path');
+	if(sessionPath !== null){ 
+		currentFolder = sessionPath;
+	}
 	getImageArray(currentFolder);
 	const current_index = current_tree.findIndex(obj => obj.path === currentFilePath);
 	if(current_index != -1){
 		const newIndex = current_index + i;
 		if(newIndex >= 0 && newIndex < current_tree.length){
-			updateImageViewer(current_tree[newIndex].path);
+			updateImageViewer(current_tree[newIndex].path)
+			updateSessionFile(current_tree[newIndex].name);
 		}
 	}
-	hideLoading();
 }
 
 function updateImageViewer(path){
+	showLoading();
+	imageViewer.classList.add("hide-image");
 	imageViewer.src = url + path;
 	currentFilePath = path;
+}
+
+function updateSessionFile(fileName){
+	sessionStorage.setItem('last_file_focused', fileName);
 }
 
 function getImageArray(path){

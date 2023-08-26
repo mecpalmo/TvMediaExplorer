@@ -1,23 +1,22 @@
+var url = "http://192.168.0.50";
+var currentFilePath = "";
+var current_tree;
 var timerId;
 
 window.onload = function () {
-
 	var urlParams = new URLSearchParams(window.location.search);
 	var filePath = urlParams.get('param');
-
 	var videoWrapper = document.getElementById('video_wrapper');
 	var videoPlayer = document.createElement("video");
 	videoPlayer.src = filePath;
 	videoPlayer.setAttribute("autoplay", "");
 	videoWrapper.appendChild(videoPlayer);
-	
 	registerKeyHandler(videoPlayer);
 	initProgressVisuals(videoPlayer);
 	videoPlayer.addEventListener('play', () => {
         showControls();
         hideLoading();
     });
-	
 }
 
 function initProgressVisuals(videoPlayer){
@@ -38,7 +37,6 @@ function getTimeFormatted(time){
 	const hours = Math.floor(time / 3600);
 	const minutes = Math.floor((time % 3600) / 60);
 	const seconds = Math.floor(time % 60);
-
 	if (hours > 0) {
 		const formattedTime = `${hours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 	    return formattedTime;
@@ -101,7 +99,7 @@ function registerKeyHandler(videoPlayer) {
 					}
 				}
 				break;
-			case 40:
+			case 40: //key DOWN
 				hideControls();
 				break;
 		}

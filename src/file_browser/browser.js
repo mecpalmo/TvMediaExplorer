@@ -1,19 +1,20 @@
 var url = "http://192.168.0.50";
 var script = "/filetree.php?path=";
-var current_path = "";
-
-var current_tree;
-var id_Table = [];
-
-var in_row = 5;
+var cloud_path = "/externalDrive/Cloud";
+var current_path = cloud_path; //path of the current visible folder
+var current_tree; //storing json file info objects
+var id_Table = []; //index - visual grid index, value - current_tree index
+var in_row = 5; //default
+var lastTileFocus = 0; //to remember what tile was focused when moving from sidebar to grid
+var lastSiderowFocus = 0; //to remember what siderow was focused when moving from grid to sidebar
+var lastFileFocus = null;
 var sidebarExtended = false;
-var lastTileFocus = 0;
-var lastSiderowFocus = 0;
-
-var sessionPath = sessionStorage.getItem('current_path');
-if(sessionPath !== null){ current_path = sessionPath; }
 
 window.onload = function () {
+	var sessionPath = sessionStorage.getItem('current_path');
+	if(sessionPath !== null){
+		current_path = sessionPath;
+	}
 	setSidebarExtended(false);
 	updateGridView();
 }
@@ -26,9 +27,10 @@ function updateGridView() {
 		})
 		.then(function(data) {
 			current_tree = data;
-			renderGridContainer(data);
+			renderGridContainer();
 			hideLoading();
 			updateThumbnails();
+			
 		})
 		.catch(function(error) {
 			current_tree = [];
@@ -44,26 +46,27 @@ function renderErrorMessage(error){
 }
 
 function updatePathDescription(){
-	var folders = current_path.split('/');
+	var visiblePath = current_path.replace(cloud_path, "");
+	var folders = visiblePath.split('/');
 	var path = "/ " + folders.join("  >  ");
 	var path_description = document.getElementById("path");
 	path_description.innerHTML = path;
 }
 
-function renderGridContainer(fileTree) {
-
+function renderGridContainer() {
+	
 	updatePathDescription();
 	id_Table = [];
 	
 	var gridContainer = document.getElementById('grid-container');
   	gridContainer.innerHTML = ''; // Clear existing content
 	var back_button_text = "Back";
-  	if(current_path === ""){back_button_text = "Exit";}
+  	if(current_path === cloud_path){back_button_text = "Exit";}
   	gridContainer.appendChild(generateTile('back', back_button_text));
 	var index = 1;
 
-	for (var i = 0; i < fileTree.length; i++) {
-		var file = fileTree[i];
+	for (var i = 0; i < current_tree.length; i++) {
+		var file = current_tree[i];
 		if (file.type === 'directory') {
 			id_Table[index] = i;
 			index += 1;
@@ -71,23 +74,39 @@ function renderGridContainer(fileTree) {
 		}
 	}
 	
-	for (var i = 0; i < fileTree.length; i++) {
-		var file = fileTree[i];
+	for (var i = 0; i < current_tree.length; i++) {
+		var file = current_tree[i];
 		if (file.type != 'directory') {
 			id_Table[index] = i;
 			index += 1;
 			gridContainer.appendChild(generateTile(file.mediaType, file.name));
 		}
 	}
-	
 	setSidebarExtended(false);
+	focusOnTile();	
+}
+
+function focusOnTile(){
 	setTileFocused(0);
-	var sessionFocus = sessionStorage.getItem('last_focus');
-	if(sessionFocus !== null){ 
-		setTileFocused(sessionFocus);
-		sessionStorage.setItem('last_focus', null);
+	var sessionFileFocus = sessionStorage.getItem('last_file_focused');
+	if(sessionFileFocus !== null){ 
+		focusTileByName(sessionFileFocus);
+		sessionStorage.removeItem('last_file_focused');
+		return;
 	}
-		
+	if(lastFileFocus !== null){
+		focusTileByName(lastFileFocus);
+		lastFilefocus = null;
+		return;
+	}
+}
+
+function focusTileByName(fileName){
+	for(var i = 1; i < id_Table.length; i++){
+		if(current_tree[id_Table[i]].name === fileName){
+			setTileFocused(i);
+		}
+	}
 }
 
 function generateTile(type, name){
@@ -167,20 +186,20 @@ function enterTile(index) {
 			current_path = current_tree[tree_index].path;
 			updateGridView();
 		}else if(current_tree[tree_index].mediaType === 'video'){
-			setSessionStorage(index);
+			setSessionStorage(current_tree[tree_index].name);
 			var nextPageUrl = '../video_player/player.html?param=' + encodeURIComponent(url + current_tree[tree_index].path);
 			window.location.href = nextPageUrl;
 		}else if(current_tree[tree_index].mediaType === 'image'){
-			setSessionStorage(index);
+			setSessionStorage(current_tree[tree_index].name);
 			var nextPageUrl = '../image_viewer/viewer.html?param=' + encodeURIComponent(current_tree[tree_index].path);
 			window.location.href = nextPageUrl;
 		}
 	}
 }
 
-function setSessionStorage(focus_index){
+function setSessionStorage(focus_file){
 	sessionStorage.setItem('current_path', current_path);
-	sessionStorage.setItem('last_focus', focus_index);
+	sessionStorage.setItem('last_file_focused', focus_file);
 }
 
 function enterSiderow(siderow){
@@ -202,7 +221,7 @@ function enterSiderow(siderow){
 }
 
 function pressedBack(){
-	if(current_path.indexOf("/") !== -1){
+	if(current_path != cloud_path){
 		backFromFolder();
 	}else{
 		try {
@@ -215,7 +234,7 @@ function pressedBack(){
 
 function backFromFolder() {
 	var folders = current_path.split('/');
-	folders.pop();
+	lastFileFocus = folders.pop();
 	current_path = folders.join('/');
 	updateGridView();
 }

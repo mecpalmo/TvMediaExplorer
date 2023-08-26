@@ -31,19 +31,19 @@ video {
 
 .duration {
   margin-top: 250px;
-  margin-left: 5%;
-  margin-right: 5%;
+  margin-left: 4%;
+  margin-right: 4%;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  justify-content: center;
-  gap: 5%;
   align-items: center;
 }
 
 .progress {
   flex-grow: 1;
   height: 15px;
+  margin-left: 4%;
+  margin-right: 4%;
   border-radius: 10px;
   background-color: #777;
 }
@@ -64,21 +64,19 @@ video {
 }
 
 .buttons_container {
-  margin-top: 40px;
+  margin-top: 60px;
   margin-bottom: 20px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 7%;
 }
 
 .play {
-  background-color: white;
-  width: 90px;
-  height: 90px;
-  border-radius: 50%;
-  padding: 35px;
+  width: 80px;
+  height: 80px;
+  margin-left: 10%;
+  margin-right: 10%;
 }
 
 .rewind {
