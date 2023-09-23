@@ -4,10 +4,18 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HTTP File Explorer</title>
-    <link rel="stylesheet" type="text/css" href="../../style.css"/>
-    <link rel="stylesheet" type="text/css" href="browser.css"/>
-    <link rel="stylesheet" type="text/css" href="../loader/loader.css"/>
-    <script src="browser.js"></script>
+    <link rel="stylesheet" type="text/css" href="../common/common.css"/>
+	<link rel="stylesheet" type="text/css" href="css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="css/browser.css"/>
+	<link rel="stylesheet" type="text/css" href="css/sidebar.css"/>
+    <link rel="stylesheet" type="text/css" href="../common/loader/loader.css"/>
+	<script type="text/javascript" src="../common/common.js"></script>
+   	<script type="text/javascript" src="./js/main.js"></script>
+	<script type="text/javascript" src="./js/connection_handler.js"></script>
+	<script type="text/javascript" src="./js/navigation_handler.js"></script>
+	<script type="text/javascript" src="./js/grid_handler.js"></script>
+	<script type="text/javascript" src="./js/sidebar_handler.js"></script>
+	<script type="text/javascript" src="../common/loader/loader.js"></script>
 </head>
 <body>
 
@@ -18,47 +26,29 @@
 			<div class="sideIconWrapper">
 				<img class="sideIcon" src="../../icons/home.png"></img>
 			</div>
-			<div class="sideText">Home</div>
+			<div class="sideText hidden">Home</div>
 		</div>
 		<div class="siderow" id="refresh" tabindex="-1">
 			<div class="sideIconWrapper">
 				<img class="sideIcon" src="../../icons/refresh.png"></img>
 			</div>
-			<div class="sideText">Refresh</div>
+			<div class="sideText hidden">Refresh</div>
 		</div>
-		<div class="siderow" id="sort" tabindex="-1">
+		<div class="siderow" id="gridSize" tabindex="-1">
 			<div class="sideIconWrapper">
-				<img class="sideIcon" src="../../icons/sort.png"></img>
+				<img class="sideIcon" src="../../icons/grid.png"></img>
 			</div>
-			<div class="sideText">Sort</div>
-		</div>
-		<div class="siderow" id="search" tabindex="-1">
-			<div class="sideIconWrapper">
-				<img class="sideIcon" src="../../icons/search.png"></img>
-			</div>
-			<div class="sideText">Search</div>
-		</div>
-		<div class="siderow" id="filter" tabindex="-1">
-			<div class="sideIconWrapper">
-				<img class="sideIcon" src="../../icons/filter.png"></img>
-			</div>
-			<div class="sideText">Filter</div>
+			<div class="sideText hidden">Grid Size</div>
 		</div>
 	</div>
 
 	<div id="main-wrapper">
-	
-		<div id="path">
-		/ 
-		</div>
-	
+		<div id="path">/</div>
 	    <div id="grid-container">
-	
 		    <div class="tile" tabindex="-1">
 		      <img class="thumbnail" src="../../icons/back.png"/>
-		      <div class="title">Exit</div>
+		      <div class="title">Back</div>
 		    </div>
-			
 	    </div>
 	</div>
 

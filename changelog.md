@@ -25,3 +25,13 @@
 * changed play and pause icon
 * when switching photos in image view, going back to grid will have last seen photo focused instead of the first seen one
 * added animations when switching between photos
+
+# v1.04
+
+* added exif.js library
+* images that are vertical only based on exif data, now display as vertical
+* added more video formats
+* updated server side scripts
+* Fixed: cannot exit app when couldn't reach the server
+* Added ability to change the grid size
+* Refactor: Code split into modules
